@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import com.devsu.hackerearth.backend.account.model.Account;
 import com.devsu.hackerearth.backend.account.model.Transaction;
 import com.devsu.hackerearth.backend.account.model.dto.BankStatementDto;
@@ -16,7 +14,6 @@ import com.devsu.hackerearth.backend.account.repository.AccountRepository;
 import com.devsu.hackerearth.backend.account.repository.TransactionRepository;
 import com.devsu.hackerearth.backend.exception.InsufficientBalanceException;
 import com.devsu.hackerearth.backend.exception.ResourceNotFoundException;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -33,7 +30,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionDto> getAll() {
-        // Get all transactions
         return transactionRepository.findAll()
                 .stream()
                 .map(this::entityToDto)
@@ -42,7 +38,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDto getById(Long id) {
-        // Get transactions by id
         Transaction tx = transactionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found, id=" + id));
         return entityToDto(tx);
@@ -50,7 +45,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDto create(TransactionDto transactionDto) {
-        // Create transaction
         Long accountId = transactionDto.getAccountId();
         double currentBalance = getCurrentBalance(accountId);
 
@@ -74,53 +68,47 @@ public class TransactionServiceImpl implements TransactionService {
         entity.setAccountId(accountId);
 
         Transaction saved = transactionRepository.save(entity);
-
         return entityToDto(saved);
     }
 
     @Override
-    public List<BankStatementDto> getAllByAccountClientIdAndDateBetween(Long clientId, Date dateTransactionStart,
+    public List<BankStatementDto> getAllByAccountClientIdAndDateBetween(
+            Long clientId,
+            Date dateTransactionStart,
             Date dateTransactionEnd) {
-        // Report
+
         List<Account> accounts = accountRepository.findByClientId(clientId);
         if (accounts.isEmpty()) {
             return Collections.emptyList();
         }
 
         List<BankStatementDto> result = new ArrayList<>();
+
         for (Account acc : accounts) {
             List<Transaction> txs = transactionRepository.findByAccountIdAndDateBetween(
                     acc.getId(),
                     dateTransactionStart,
                     dateTransactionEnd);
 
-            List<TransactionDto> txDtos = txs.stream()
-                    .map(this::entityToDto)
-                    .collect(Collectors.toList());
-
-            BankStatementDto statement = new BankStatementDto(
-                    dateTransactionEnd,
-                    null, // Client (Aquí se puede hacer otro lookup al microservicio de Client)
-                    acc.getNumber(),
-                    acc.getType(),
-                    acc.getInitialAmount(),
-                    acc.isActive(),
-                    null, // transactionType (si se requiere uno global)
-                    0,
-                    0,
-                    acc.getId(),
-                    txDtos);
-
-            // statement.setClient("Nombre del cliente");
-
-            result.add(statement);
+            for (Transaction tx : txs) {
+                BankStatementDto statement = new BankStatementDto(
+                        tx.getDate(),
+                        "client",
+                        acc.getNumber(),
+                        acc.getType(),
+                        acc.getInitialAmount(),
+                        acc.isActive(),
+                        tx.getType(),
+                        tx.getAmount(),
+                        tx.getBalance());
+                result.add(statement);
+            }
         }
         return result;
     }
 
     @Override
     public TransactionDto getLastByAccountId(Long accountId) {
-        // If you need it
         Transaction lastTx = transactionRepository.findTopByAccountIdOrderByDateDesc(accountId);
         if (lastTx == null) {
             return null;

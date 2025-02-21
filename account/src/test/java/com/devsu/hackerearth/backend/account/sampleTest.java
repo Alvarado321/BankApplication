@@ -33,4 +33,3 @@ public class sampleTest {
 		assertEquals(createdAccount, response.getBody());
 	}
 }
-

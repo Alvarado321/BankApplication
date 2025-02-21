@@ -14,10 +14,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/clients",
+              "raw": "http://localhost:8001/api/clients",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8001",
               "path": ["api", "clients"]
             }
           },
@@ -29,10 +29,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/clients/1",
+              "raw": "http://localhost:8001/api/clients/1",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8001",
               "path": ["api", "clients", "1"]
             }
           },
@@ -48,10 +48,10 @@
               "raw": "{\n  \"dni\": \"1234567890\",\n  \"name\": \"John Doe\",\n  \"password\": \"secret\",\n  \"gender\": \"M\",\n  \"age\": 30,\n  \"address\": \"123 Main St\",\n  \"phone\": \"5551234567\",\n  \"active\": true\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/clients",
+              "raw": "http://localhost:8001/api/clients",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8001",
               "path": ["api", "clients"]
             }
           },
@@ -68,10 +68,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/accounts",
+              "raw": "http://localhost:8000/api/accounts",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8000",
               "path": ["api", "accounts"]
             }
           },
@@ -87,10 +87,10 @@
               "raw": "{\n  \"number\": \"123-ABC\",\n  \"type\": \"SAVINGS\",\n  \"initialAmount\": 1000,\n  \"active\": true,\n  \"clientId\": 1\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/accounts",
+              "raw": "http://localhost:8000/api/accounts",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8000",
               "path": ["api", "accounts"]
             }
           },
@@ -107,10 +107,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/transactions",
+              "raw": "http://localhost:8000/api/transactions",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8000",
               "path": ["api", "transactions"]
             }
           },
@@ -126,10 +126,10 @@
               "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 200,\n  \"accountId\": 1\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/transactions",
+              "raw": "http://localhost:8000/api/transactions",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8000",
               "path": ["api", "transactions"]
             }
           },
@@ -145,10 +145,10 @@
               "raw": "{\n  \"type\": \"WITHDRAW\",\n  \"amount\": 100,\n  \"accountId\": 1\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/transactions",
+              "raw": "http://localhost:8000/api/transactions",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8000",
               "path": ["api", "transactions"]
             }
           },
@@ -160,10 +160,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/transactions/clients/1/report?dateTransactionStart=2025-01-01&dateTransactionEnd=2025-12-31",
+              "raw": "http://localhost:8000/api/transactions/clients/1/report?dateTransactionStart=2025-01-01&dateTransactionEnd=2025-12-31",
               "protocol": "http",
               "host": ["localhost"],
-              "port": "8080",
+              "port": "8000",
               "path": ["api", "transactions", "clients", "1", "report"],
               "query": [
                 { "key": "dateTransactionStart", "value": "2025-01-01" },
